@@ -13,10 +13,10 @@ class CreateTableTienda extends Migration
      */
     public function up()
     {
-        Schema::create('tienda', function (Blueprint $table) {
+        Schema::create('tiendas', function (Blueprint $table) {
 
             $table->increments('id_tienda');
-            $table->integer('nombre', 50);
+            $table->string('nombre', 50);
             $table->date('fecha_apertura');
 
         });
