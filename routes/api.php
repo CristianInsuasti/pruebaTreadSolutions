@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post("guardar-tienda", "API\ApiTienda@addTienda");
 Route::get("consultar-productos", "API\ApiTienda@consultarProductos");
-route::post("guardar-productos", "App\ApiTienda@agregarProductoTienda");
-route::post("actualizar-productos", "App\ApiTienda@actualizarProducto");
-route::post("desactivar-producto", "App\ApiTienda@desactivarProducto");
+route::post("guardar-productos", "API\ApiTienda@agregarProductoTienda");
+route::post("actualizar-productos", "API\ApiTienda@actualizarProducto");
+route::post("desactivar-producto", "API\ApiTienda@desactivarProducto");
+route::post("consultar-producto", "API\ApiTienda@consultarProductoTienda");

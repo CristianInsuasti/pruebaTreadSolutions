@@ -41,17 +41,39 @@ class ApiTienda extends Controller
         }
     }
 
+    public function consultarProductoTienda(Request $request)
+    {
+        $data = DB::table('productos')->where('estado', '1')
+            ->where('id_tienda', '=', $request->id_tienda)
+            ->get();
+        if ($data->isEmpty()) {
+
+            return response()->json(['menssage' => 'No se encontraron registros'], 401);
+        } else {
+
+            return response()->json(['menssage' => 'OK', 'data' => $data], 201);
+        }
+    }
+
     public function agregarProductoTienda(Request $request)
     {
         $producto = new Producto();
-        $producto->id_tienda = $request->id_tienda;
-        $producto->nombre = $request->nombre;
-        $producto->sku = $request->sku;
-        $producto->valor = $request->valor;
-        $producto->imagen = $request->imagen;
-        $producto->estado = '1';
 
-        $producto->save();
+        if (Producto::where('sku', '=', $request->sku)->exists()) {
+
+            return response()->json(['menssage' => 'Faild', 'info' => 'el SKU ya existe'], 200);
+        } else {
+
+            $producto->id_tienda = $request->id_tienda;
+            $producto->nombre = $request->nombre;
+            $producto->sku = $request->sku;
+            $producto->descripcion = $request->descripcion;
+            $producto->valor = $request->valor;
+            $producto->imagen = $request->imagen;
+            $producto->estado = '1';
+
+            $producto->save();
+        }
 
         if ($producto) {
             return response()->json(['message' => 'OK'], 201);
@@ -63,11 +85,11 @@ class ApiTienda extends Controller
     public function actualizarProducto(Request $request)
     {
         $producto = new Producto();
-        $producto = Producto::where('id_tienda', '=', $request->id_tienda)
+        $producto = Producto::where('id_producto', '=', $request->id_producto)
             ->update([
                 "id_tienda" => $request->id_tienda,
                 "nombre" => $request->nombre,
-                "sku" => $request->sku,
+                "descripcion" => $request->descripcion,
                 "valor" => $request->valor,
                 "imagen" => $request->imagen,
             ]);
@@ -82,7 +104,7 @@ class ApiTienda extends Controller
     public function desactivarProducto(Request $request)
     {
         $producto = new Producto();
-        $producto = Producto::where('id_tienda', '=', $request->id_tienda)
+        $producto = Producto::where('id_producto', '=', $request->id_producto)
             ->update([
                 "estado" => "2",
             ]);
