@@ -18,4 +18,4 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post("guardar-tienda", "API\ApiTienda@addUser");
+Route::post("guardar-tienda", "API\ApiTienda@addTienda");
