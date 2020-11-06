@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Tienda;
 use App\Models\Producto;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ApiTienda extends Controller
 {
@@ -23,6 +24,20 @@ class ApiTienda extends Controller
             return response()->json(['menssage' => 'OK'], 201);
         } else {
             return response()->json(['menssage' => 'Faild'], 401);
+        }
+    }
+
+    public function consultarProductos()
+    {
+        $data = DB::table('productos')->where('estado', '1')
+            ->get();
+
+        if ($data->isEmpty()) {
+
+            return response()->json(['menssage' => 'No se encontraron registros'], 401);
+        } else {
+
+            return response()->json(['menssage' => 'OK', 'data' => $data], 201);
         }
     }
 
