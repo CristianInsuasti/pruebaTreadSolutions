@@ -21,6 +21,7 @@ class CreateTableProducto extends Migration
             $table->string('descripcion', 100);
             $table->string('valor', 20);
             $table->string('imagen', 20);
+            $table->integer('estado');
         });
     }
 
