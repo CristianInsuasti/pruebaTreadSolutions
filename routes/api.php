@@ -24,3 +24,4 @@ route::post("guardar-productos", "API\ApiTienda@agregarProductoTienda");
 route::post("actualizar-productos", "API\ApiTienda@actualizarProducto");
 route::post("desactivar-producto", "API\ApiTienda@desactivarProducto");
 route::post("consultar-producto", "API\ApiTienda@consultarProductoTienda");
+route::get("consultar-tiendas", "API\ApiTienda@consultarTiendas");

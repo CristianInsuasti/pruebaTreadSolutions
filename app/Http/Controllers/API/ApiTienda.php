@@ -29,7 +29,11 @@ class ApiTienda extends Controller
 
     public function consultarProductos()
     {
-        $data = DB::table('productos')->where('estado', '1')
+
+        $data = DB::table('productos')
+            ->join('tiendas', 'tiendas.id_tienda', '=', 'productos.id_tienda')
+            ->select('productos.*', 'tiendas.nombre as nombre_tienda')
+            ->where('estado', '1')
             ->get();
 
         if ($data->isEmpty()) {
@@ -43,12 +47,15 @@ class ApiTienda extends Controller
 
     public function consultarProductoTienda(Request $request)
     {
-        $data = DB::table('productos')->where('estado', '1')
-            ->where('id_tienda', '=', $request->id_tienda)
+        $data = DB::table('productos')
+            ->join('tiendas', 'tiendas.id_tienda', '=', 'productos.id_tienda')
+            ->select('productos.*', 'tiendas.nombre  as nombre_tienda')
+            ->where('tiendas.id_tienda', '=', $request->id_tienda)
+            ->where('estado', '1')
             ->get();
         if ($data->isEmpty()) {
 
-            return response()->json(['menssage' => 'No se encontraron registros'], 401);
+            return response()->json(['menssage' => 'FAIL', 'info' => 'No se encontraron registros'], 401);
         } else {
 
             return response()->json(['menssage' => 'OK', 'data' => $data], 201);
@@ -111,6 +118,17 @@ class ApiTienda extends Controller
 
         if ($producto) {
             return response()->json(['menssage' => 'OK'], 201);
+        } else {
+            return response()->json(['menssage' => 'Faild'], 401);
+        }
+    }
+
+    public function consultarTiendas()
+    {
+        $sql = DB::table('tiendas')->get();
+
+        if ($sql) {
+            return response()->json(['menssage' => 'OK', 'data' => $sql], 201);
         } else {
             return response()->json(['menssage' => 'Faild'], 401);
         }
