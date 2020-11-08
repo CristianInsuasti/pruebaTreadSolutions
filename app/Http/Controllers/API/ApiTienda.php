@@ -83,9 +83,9 @@ class ApiTienda extends Controller
         }
 
         if ($producto) {
-            return response()->json(['message' => 'OK'], 201);
+            return response()->json(['menssage' => 'OK'], 201);
         } else {
-            return response()->json(['message' => 'OK'], 401);
+            return response()->json(['menssage' => 'fail'], 401);
         }
     }
 
